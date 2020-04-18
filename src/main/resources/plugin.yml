@@ -1,0 +1,11 @@
+name: Jailed
+version: 1.0
+main: io.github.equinoxearth.jailed.Jailed
+api-version: 1.15
+
+# Commands
+commands:
+  guard:
+    description: Commands for going on & off duty as well as general management
+    usage: /guard [parameters]
+    permission: guard
