@@ -52,6 +52,7 @@ public final class Jailed extends JavaPlugin {
         // Pull every guard off duty //
         Guard g;
         Map<UUID, Guard> gList = guardManager.getGuards();
+        // Iterate through the list of guards //
         for (Map.Entry<UUID, Guard> entry : gList.entrySet()) {
             g = entry.getValue();
             guardManager.endShift(Bukkit.getPlayer(g.getPlayerID()));
