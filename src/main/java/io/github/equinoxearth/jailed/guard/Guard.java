@@ -43,22 +43,59 @@ public class Guard {
     }
 
     /**
-     * Fetch the Mojang UUID for the Guard
-     * @return UUID Value
+     * Get the Player Mojang UUID of a guard
+     * @return
      */
-    public final UUID getPlayerID() { return this.playerID; }
-
-    /**
-     * Check if the Guard is currently on duty
-     * @return true or false
-     */
-    public boolean isOnDuty() { return this.onDuty; }
-
-    public void setPlayerArmor(ItemStack[] armor) {
-        this.playerArmor = armor;
+    public UUID getPlayerID() {
+        return this.playerID;
     }
 
-    public void startShift() {
+    /**
+     * Get the Player Name of a guard
+     * @return
+     */
+    public String getPlayerName() {
+        return this.playerName;
+    }
 
+    /**
+     * Get the players armor, used when reverting a player to regular gamemode (Leaving guard mode)
+     * @return
+     */
+    public ItemStack[] getPlayerArmor() {
+        return playerArmor;
+    }
+
+    /**
+     * Get the players inventory, used when reverting a player to regular gamemode (Leaving guard mode)
+     * @return
+     */
+    public ItemStack[] getPlayerInventory() {
+        return playerInventory;
+    }
+
+    /**
+     * Get the guards armor, specific to the gamemode
+     * @return
+     */
+    public ItemStack[] getGuardArmor() {
+        return guardArmor;
+    }
+
+    /**
+     * Get the guards inventory, specific to the gamemode
+     * @return
+     */
+    public ItemStack[] getGuardInventory() {
+        return guardInventory;
+    }
+
+    /**
+     * Get whether or not a guard is on duty, used mainly for the /guard start and stop commands and probably when
+     * whacking players with the stick.
+     * @return
+     */
+    public boolean isOnDuty() {
+        return onDuty;
     }
 }

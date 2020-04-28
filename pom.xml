@@ -143,12 +143,12 @@
         </dependency>
 
         <!-- Spigot JAR Dependency -->
-        <dependency>
+        <!--<dependency>
             <groupId>spigot-server</groupId>
             <artifactId>spigotjar</artifactId>
             <version>1.15.2</version>
             <scope>system</scope>
             <systemPath>D:\SPIGOT SERVER\spigot-1.15.2.jar</systemPath>
-        </dependency>
+        </dependency>-->
     </dependencies>
 </project>

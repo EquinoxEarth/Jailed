@@ -13,9 +13,19 @@ public class JailCommand extends BaseCommand {
     @Dependency("jPlugin")
     private Jailed jPlugin;
 
+    /**
+     * Set X position 1 for a jail
+     * @param player
+     */
     @Subcommand("pos1")
     @CommandPermission("jail.p1")
     public void pointOne(final Player player) {
+
+    }
+
+    @Subcommand("pos2")
+    @CommandPermission("jail.p2")
+    public void pointTwo(final Player player) {
 
     }
 

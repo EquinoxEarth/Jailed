@@ -13,6 +13,10 @@ public class GuardCommand extends BaseCommand {
 
     // Define all Sub Commands for the Guard Base //
 
+    /**
+     * Starts a guard mode
+     * @param sender
+     */
     @Subcommand("start")
     @CommandPermission("guard.start")
     @Description("Start a guard shift")
@@ -20,11 +24,20 @@ public class GuardCommand extends BaseCommand {
 
     }
 
+    /**
+     * Ends a guard mode
+     * @param sender
+     */
     @Subcommand("end")
     @CommandPermission("guard.end")
     @Description("End a guard shift")
     public void onEnd(CommandSender sender) {}
 
+    /**
+     * Lists guards
+     * @param sender
+     * @param status
+     */
     @Subcommand("list")
     @CommandPermission("guard.admin.list")
     @Description("List guards based on supplied parameter. If no parameter, list all including status")
