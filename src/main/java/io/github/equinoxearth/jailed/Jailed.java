@@ -6,11 +6,16 @@ import co.aikar.commands.MessageType;
 import com.sun.corba.se.impl.activation.CommandHandler;
 import io.github.equinoxearth.jailed.commands.GuardCommand;
 import io.github.equinoxearth.jailed.commands.JailCommand;
+import io.github.equinoxearth.jailed.guard.Guard;
+import io.github.equinoxearth.jailed.guard.GuardManager;
 import io.github.equinoxearth.jailed.jail.Jail;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 public final class Jailed extends JavaPlugin {
 
@@ -22,7 +27,7 @@ public final class Jailed extends JavaPlugin {
     public static Jailed plugin;
     private static BukkitCommandManager commandManager;
 
-
+    public GuardManager guardManager;
 
     @Override
     public void onEnable() {
@@ -33,6 +38,7 @@ public final class Jailed extends JavaPlugin {
          */
 
         plugin = this;
+        guardManager = new GuardManager();
         setupFilePaths();
         registerCommands();
 
@@ -42,6 +48,15 @@ public final class Jailed extends JavaPlugin {
 
     @Override
     public void onDisable() {
+
+        // Pull every guard off duty //
+        Guard g;
+        Map<UUID, Guard> gList = guardManager.getGuards();
+        for (Map.Entry<UUID, Guard> entry : gList.entrySet()) {
+            g = entry.getValue();
+            guardManager.endShift(Bukkit.getPlayer(g.getPlayerID()));
+        }
+
         getLogger().info("Jailed is Disabled.");
     }
 

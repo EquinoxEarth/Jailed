@@ -3,7 +3,10 @@ package io.github.equinoxearth.jailed.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import io.github.equinoxearth.jailed.Jailed;
+import io.github.equinoxearth.jailed.guard.Guard;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 @CommandAlias("guard")
 @Description("Base command for all commands involving Guards")
@@ -21,7 +24,8 @@ public class GuardCommand extends BaseCommand {
     @CommandPermission("guard.start")
     @Description("Start a guard shift")
     public void onStart(CommandSender sender) {
-
+        Player p = Bukkit.getPlayer(sender.getName());
+        plugin.guardManager.startShift(p);
     }
 
     /**

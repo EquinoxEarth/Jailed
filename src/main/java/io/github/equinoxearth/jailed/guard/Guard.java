@@ -98,4 +98,20 @@ public class Guard {
     public boolean isOnDuty() {
         return onDuty;
     }
+
+    public void setPlayerArmor(ItemStack[] playerArmor) {
+        this.playerArmor = playerArmor;
+    }
+
+    public void setPlayerInventory(ItemStack[] playerInventory) {
+        this.playerInventory = playerInventory;
+    }
+
+    public void setGuardArmor(ItemStack[] guardArmor) {
+        this.guardArmor = guardArmor;
+    }
+
+    public void setGuardInventory(ItemStack[] guardInventory) {
+        this.guardInventory = guardInventory;
+    }
 }

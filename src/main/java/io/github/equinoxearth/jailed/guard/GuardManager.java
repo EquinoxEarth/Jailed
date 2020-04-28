@@ -23,13 +23,41 @@ public class GuardManager {
         this.guards = new HashMap<UUID, Guard>();           // Create the list of guards //
     }
 
-    public boolean isGuard(final Player player) {
-        return player.hasPermission("guard.player");
+    public Map<UUID, Guard> getGuards() {
+        return this.guards;
     }
 
-    public void makeGuard(final Player player) {
-        if (isGuard(player)) {
+    public void startShift(Player p) {
+        Guard g = guards.get(p.getUniqueId());
 
+        // Is the player already on duty? //
+        if (g.isOnDuty()) {
+            p.sendMessage("You are already on duty!");
+        } else {
+            // Save the players inventory //
+            g.setPlayerArmor(p.getInventory().getArmorContents());
+            g.setPlayerInventory(p.getInventory().getStorageContents());
+
+            // Replace it with Guard items //
+            p.getInventory().setArmorContents(g.getGuardArmor());
+            p.getInventory().setStorageContents(g.getGuardInventory());
+        }
+    }
+
+    public void endShift(Player p) {
+        Guard g = guards.get(p.getUniqueId());
+
+        // Is the player already off duty? //
+        if (!g.isOnDuty()) {
+            p.sendMessage("You are already off duty!");
+        } else {
+            // Save the guards inventory //
+            g.setGuardArmor(p.getInventory().getArmorContents());
+            g.setGuardInventory(p.getInventory().getStorageContents());
+
+            // Replace it with Player items //
+            p.getInventory().setArmorContents(g.getPlayerArmor());
+            p.getInventory().setStorageContents(g.getPlayerInventory());
         }
     }
 
