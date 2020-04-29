@@ -7,6 +7,7 @@ import com.sun.corba.se.impl.activation.CommandHandler;
 import io.github.equinoxearth.jailed.commands.GuardCommand;
 import io.github.equinoxearth.jailed.commands.JailCommand;
 import io.github.equinoxearth.jailed.guard.Guard;
+import io.github.equinoxearth.jailed.guard.GuardListener;
 import io.github.equinoxearth.jailed.guard.GuardManager;
 import io.github.equinoxearth.jailed.jail.Jail;
 import org.bukkit.Bukkit;
@@ -27,7 +28,7 @@ public final class Jailed extends JavaPlugin {
     public static Jailed plugin;
     private static BukkitCommandManager commandManager;
 
-    public GuardManager guardManager;
+    public static GuardManager guardManager;
 
     @Override
     public void onEnable() {
@@ -41,6 +42,9 @@ public final class Jailed extends JavaPlugin {
         guardManager = new GuardManager();
         setupFilePaths();
         registerCommands();
+
+        // Register plugin listeners //
+        getServer().getPluginManager().registerEvents(new GuardListener(), this);
 
         // This needs to come last, after we've successfully gotten through everything //
         getLogger().info("Jailed is Enabled.");

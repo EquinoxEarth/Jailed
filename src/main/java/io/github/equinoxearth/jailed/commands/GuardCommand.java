@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 @Description("Base command for all commands involving Guards")
 public class GuardCommand extends BaseCommand {
 
-    protected static final Jailed plugin = Jailed.plugin;
+    protected static Jailed plugin = Jailed.plugin;
 
     // Define all Sub Commands for the Guard Base //
 
@@ -24,8 +24,7 @@ public class GuardCommand extends BaseCommand {
     @CommandPermission("guard.start")
     @Description("Start a guard shift")
     public void onStart(CommandSender sender) {
-        Player p = Bukkit.getPlayer(sender.getName());
-        plugin.guardManager.startShift(p);
+        plugin.guardManager.startShift(Bukkit.getPlayer(sender.getName()));
     }
 
     /**
@@ -35,7 +34,16 @@ public class GuardCommand extends BaseCommand {
     @Subcommand("end")
     @CommandPermission("guard.end")
     @Description("End a guard shift")
-    public void onEnd(CommandSender sender) {}
+    public void onEnd(CommandSender sender) {
+        plugin.guardManager.endShift(Bukkit.getPlayer(sender.getName()));
+    }
+
+    @Subcommand("setspawn")
+    @CommandPermission("guard.setspawn")
+    @Description("Set the location of the guard station to your location")
+    public void onStationSpawnSet(CommandSender sender) {
+        plugin.guardManager.setStationLocation(Bukkit.getPlayer(sender.getName()).getLocation());
+    }
 
     /**
      * Lists guards

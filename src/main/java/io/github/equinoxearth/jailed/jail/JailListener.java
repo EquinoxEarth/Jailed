@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class JailListener implements Listener {
     // Create our instance variable for the plugin //
-    private final Jailed instance;
+    private static Jailed instance;
 
     // Create a new Jail Listener //
     public JailListener(Jailed instance) {

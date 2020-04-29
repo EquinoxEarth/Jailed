@@ -2,10 +2,13 @@ package io.github.equinoxearth.jailed.guard;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.OfflinePlayer.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 // Represents Guards in the plugin //
