@@ -12,11 +12,11 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class GuardListener implements Listener {
 
-    private static Jailed plugin;
+    private Jailed plugin;
     private static GuardManager guardManager;
 
-    public GuardListener() {
-        this.plugin = Jailed.plugin;
+    public GuardListener(Jailed p) {
+        this.plugin = p;
         this.guardManager = plugin.guardManager;
     }
 
@@ -33,9 +33,17 @@ public class GuardListener implements Listener {
         // Check if the player is already in the guard list //
         if (!guardManager.getGuards().containsKey(p.getUniqueId()) && p.hasPermission("guard.start")) {
             // Create a new guard instance and put it in the list //
-            Guard g = new Guard(p.getUniqueId(), p.getName());
+            Guard g = new Guard(p.getUniqueId());
+            g.setPlayerInventory(p.getInventory().getStorageContents());
+            g.setPlayerArmor(p.getInventory().getArmorContents());
+
             guardManager.getGuards().put(g.getPlayerID(), g);
+            plugin.debug("Player added to Guard list");
+            plugin.debug(guardManager.getGuards().toString());
+            return;
         }
+
+        plugin.debug("Player already in Guard list");
     }
 
     /**

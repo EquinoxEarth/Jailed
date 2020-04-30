@@ -3,16 +3,21 @@ package io.github.equinoxearth.jailed.guard;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.OfflinePlayer.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-// Represents Guards in the plugin //
-public class Guard {
+/**
+ * Represents Guards in the gamemode.
+ */
+@SerializableAs("Guard")
+public class Guard implements ConfigurationSerializable {
 
     // <-- Variable Section Begins --> //
 
@@ -33,16 +38,16 @@ public class Guard {
     /**
      * Create a new Default Guard
      * @param pID Mojang UUID for the player
-     * @param pName Name of the player
      */
-    public Guard(UUID pID, String pName) {
+    public Guard(UUID pID) {
         player = Bukkit.getPlayer(pID);
         this.playerID = pID;
-        this.playerName = pName;
+        this.playerName = player.getPlayerListName();
         this.onDuty = false;
 
         // Give the guard the default items //
-
+        this.guardArmor = new ItemStack[0];
+        this.guardInventory = new ItemStack[0];
     }
 
     /**
@@ -116,5 +121,46 @@ public class Guard {
 
     public void setGuardInventory(ItemStack[] guardInventory) {
         this.guardInventory = guardInventory;
+    }
+
+    /*
+     * SERIALIZE & DESERIALIZE SECTION
+     */
+
+    /**
+     * Build a Guard object from a Map
+     * @param map
+     */
+    public Guard(Map<String, Object> map) {
+        this.playerID = UUID.fromString((String) map.get("playerID"));
+        this.playerName = (String) map.get("playerName");
+        this.playerArmor = ((List<ItemStack>) map.get("playerArmor")).toArray(new ItemStack[0]);
+        this.playerInventory = ((List<ItemStack>) map.get("playerInventory")).toArray(new ItemStack[0]);
+        this.guardArmor = ((List<ItemStack>) map.get("guardArmor")).toArray(new ItemStack[0]);
+        this.guardInventory = ((List<ItemStack>) map.get("guardInventory")).toArray(new ItemStack[0]);
+        this.onDuty = false;
+    }
+
+    public static Guard deserialize(Map<String, Object> map) {
+        return new Guard(map);
+    }
+
+    public static Guard valueOf(Map<String, Object> map) {
+        return new Guard(map);
+    }
+
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> map = new HashMap<>();
+
+        // Add all properties to the map //
+        map.put("playerID", this.playerID.toString());
+        map.put("playerName", this.playerName);
+        map.put("playerArmor", this.playerArmor);
+        map.put("playerInventory", this.playerInventory);
+        map.put("guardArmor", this.guardArmor);
+        map.put("guardInventory", this.guardInventory);
+
+        return map;
     }
 }

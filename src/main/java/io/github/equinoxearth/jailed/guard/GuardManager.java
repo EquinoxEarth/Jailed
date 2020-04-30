@@ -2,8 +2,12 @@ package io.github.equinoxearth.jailed.guard;
 
 import io.github.equinoxearth.jailed.Jailed;
 import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -11,19 +15,37 @@ import java.util.UUID;
 public class GuardManager {
 
     // Variable Declarations //
-    private static Jailed plugin;                            // Instance of the plugin //
+    private Jailed plugin;                           // Instance of the plugin //
     private Map<UUID, Guard> guards;
-    private Location stationLocation;                               // Station for guards //
+    private Location stationLocation;                       // Station for guards //
 
     // Create a new instance of GuardManager //
-    public GuardManager() {
-        this.plugin = Jailed.plugin;                        // Map the plugin instance into the GuardManager //
+    public GuardManager(Jailed p) {
+        plugin = p;                                         // Map the plugin instance into the GuardManager //
         this.guards = new HashMap<UUID, Guard>();           // Create the list of guards //
         loadGuards();
     }
 
+    public void addGuard(Player p) {
+        guards.put(p.getUniqueId(), new Guard(p.getUniqueId()));
+    }
+
     public void loadGuards() {
         // Load all the guards here //
+        try {
+            guards = GuardLoader.loadGuards(new File(plugin.getGuardsFilePath()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveGuards() {
+        // Save all the guards here //
+        try {
+            GuardLoader.saveGuards(new File(plugin.getGuardsFilePath()), guards);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

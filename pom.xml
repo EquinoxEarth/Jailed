@@ -142,6 +142,14 @@
             <version>2.3.1</version>
         </dependency>
 
+        <!-- Java to JSON API -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.1</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Spigot JAR Dependency -->
         <!--<dependency>
             <groupId>spigot-server</groupId>

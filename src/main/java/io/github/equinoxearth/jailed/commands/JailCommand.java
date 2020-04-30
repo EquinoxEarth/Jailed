@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 public class JailCommand extends BaseCommand {
 
     // Dependencies //
-    @Dependency("jPlugin")
-    private Jailed jPlugin;
+    @Dependency("plugin")
+    private Jailed plugin;
 
     /**
      * Set X position 1 for a jail

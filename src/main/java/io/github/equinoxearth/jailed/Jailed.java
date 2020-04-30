@@ -11,6 +11,7 @@ import io.github.equinoxearth.jailed.guard.GuardListener;
 import io.github.equinoxearth.jailed.guard.GuardManager;
 import io.github.equinoxearth.jailed.jail.Jail;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -18,7 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public final class Jailed extends JavaPlugin {
+public class Jailed extends JavaPlugin {
 
     /* File Paths */
     private static String mainDirectory;
@@ -28,7 +29,11 @@ public final class Jailed extends JavaPlugin {
     public static Jailed plugin;
     private static BukkitCommandManager commandManager;
 
-    public static GuardManager guardManager;
+    public GuardManager guardManager;
+
+    static {
+        ConfigurationSerialization.registerClass(Guard.class, "Guard");
+    }
 
     @Override
     public void onEnable() {
@@ -39,12 +44,16 @@ public final class Jailed extends JavaPlugin {
          */
 
         plugin = this;
-        guardManager = new GuardManager();
         setupFilePaths();
         registerCommands();
 
+        guardManager = new GuardManager(this);
+
+        // Load Guards & Jails //
+        guardManager.loadGuards();
+
         // Register plugin listeners //
-        getServer().getPluginManager().registerEvents(new GuardListener(), this);
+        getServer().getPluginManager().registerEvents(new GuardListener(this), this);
 
         // This needs to come last, after we've successfully gotten through everything //
         getLogger().info("Jailed is Enabled.");
@@ -59,8 +68,13 @@ public final class Jailed extends JavaPlugin {
         // Iterate through the list of guards //
         for (Map.Entry<UUID, Guard> entry : gList.entrySet()) {
             g = entry.getValue();
-            guardManager.endShift(Bukkit.getPlayer(g.getPlayerID()));
+            if (g.isOnDuty()) {
+                guardManager.endShift(Bukkit.getPlayer(g.getPlayerID()));
+            }
         }
+
+        // Save Guards to file //
+        guardManager.saveGuards();
 
         getLogger().info("Jailed is Disabled.");
     }
@@ -76,6 +90,16 @@ public final class Jailed extends JavaPlugin {
         mainDirectory = getDataFolder().getPath() + File.separator;
         flatFileDirectory = mainDirectory + "flatfiles" + File.separator;
         guardsFile = flatFileDirectory + "guards.yml";
+
+        // Create any folders that don't exist //
+        File t = new File(mainDirectory);
+        if(!t.exists()) {
+            t.mkdir();
+            t = new File(flatFileDirectory);
+            if(!t.exists()) {
+                t.mkdir();
+            }
+        }
     }
 
     /**
@@ -125,6 +149,7 @@ public final class Jailed extends JavaPlugin {
         something.doSomething("with this something");
         commandManager.registerDependency(Something.class, something);
          */
+        commandManager.registerDependency(Jailed.class, "plugin", plugin);
 
         // Register Commands //
         commandManager.registerCommand(new GuardCommand().setExceptionHandler((command, registeredCommand, sender, args, t) -> {
