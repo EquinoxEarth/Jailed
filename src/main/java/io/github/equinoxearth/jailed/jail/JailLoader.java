@@ -14,29 +14,27 @@ public class JailLoader {
 
     public static Jailed plugin = Jailed.plugin;
 
-    public static Map<String, Jail> loadJails(File file) {
-        FileConfiguration jailsFile = new YamlConfiguration();
-        Map<String, Jail> jailList = new HashMap<String, Jail>();
+    public static Jail loadJail(File file) {
+        FileConfiguration jailFile = new YamlConfiguration();
+        Jail jail = new Jail();
 
         // Check if the file exists //
         if(!file.exists()) {
             try {
-                plugin.debug("Creating Jails file...");
+                plugin.debug("Creating Jail file...");
                 file.createNewFile();
-                plugin.debug("Jails file created, you need to create the jail!");
+                plugin.debug("Jail file created, you need to create the jail!");
             } catch (IOException e) {
-                plugin.debug("Could not create Jails file!");
+                plugin.debug("Could not create Jail file!");
                 e.printStackTrace();
             }
         } else {
             // ALL LOADING DONE HERE //
             try {
-                jailsFile.load(file);
+                jailFile.load(file);
 
                 // LOOP THROUGH ALL ENTRIES //
-                jailsFile.getKeys(false).forEach(name -> {
-                   jailList.put(name, (Jail) jailsFile.get(name));
-                });
+                jailFile.get("jail");
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InvalidConfigurationException e) {
@@ -44,10 +42,10 @@ public class JailLoader {
             }
         }
 
-        return jailList;
+        return jail;
     }
 
-    public static void saveJails(File file, Map<String, Jail> jails) {
+    public static void saveJail(File file, Jail jail) {
         FileConfiguration jailsFile = new YamlConfiguration();
 
         // Check if the file exists //
@@ -55,20 +53,18 @@ public class JailLoader {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                plugin.debug("Could not save Jails file!");
+                plugin.debug("Could not save Jail file!");
                 e.printStackTrace();
             }
         }
         // ALL SAVING DONE HERE //
-        jails.keySet().forEach(name -> {
-            jailsFile.set(name, jails.get(name));
-        });
+        jailsFile.set("jail", jail);
 
         // Save the file //
         try {
             jailsFile.save(file);
         } catch (IOException e) {
-            plugin.debug("Could not save the Jails file!");
+            plugin.debug("Could not save the Jail file!");
             e.printStackTrace();
         }
     }

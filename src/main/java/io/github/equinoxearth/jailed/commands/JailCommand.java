@@ -3,6 +3,7 @@ package io.github.equinoxearth.jailed.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import io.github.equinoxearth.jailed.Jailed;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandAlias("jail")
@@ -19,13 +20,13 @@ public class JailCommand extends BaseCommand {
      */
     @Subcommand("pos1")
     @CommandPermission("jail.p1")
-    public void pointOne(Player player) {
+    public void pointOne(CommandSender sender, Player player, String name) {
 
     }
 
     @Subcommand("pos2")
     @CommandPermission("jail.p2")
-    public void pointTwo(Player player) {
+    public void pointTwo(CommandSender sender, Player player, String name) {
 
     }
 

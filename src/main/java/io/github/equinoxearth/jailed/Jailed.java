@@ -8,8 +8,11 @@ import io.github.equinoxearth.jailed.commands.GuardCommand;
 import io.github.equinoxearth.jailed.commands.JailCommand;
 import io.github.equinoxearth.jailed.guard.Guard;
 import io.github.equinoxearth.jailed.guard.GuardListener;
+import io.github.equinoxearth.jailed.guard.GuardLoader;
 import io.github.equinoxearth.jailed.guard.GuardManager;
 import io.github.equinoxearth.jailed.jail.Jail;
+import io.github.equinoxearth.jailed.jail.JailLoader;
+import io.github.equinoxearth.jailed.jail.JailManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,11 +28,13 @@ public class Jailed extends JavaPlugin {
     private static String mainDirectory;
     private static String flatFileDirectory;
     private static String guardsFile;
+    private static String jailFile;
 
     public static Jailed plugin;
     private static BukkitCommandManager commandManager;
 
     public GuardManager guardManager;
+    public JailManager jailManager;
 
     static {
         ConfigurationSerialization.registerClass(Guard.class, "Guard");
@@ -48,9 +53,7 @@ public class Jailed extends JavaPlugin {
         registerCommands();
 
         guardManager = new GuardManager(this);
-
-        // Load Guards & Jails //
-        guardManager.loadGuards();
+        jailManager = new JailManager(this);
 
         // Register plugin listeners //
         getServer().getPluginManager().registerEvents(new GuardListener(this), this);
@@ -73,8 +76,9 @@ public class Jailed extends JavaPlugin {
             }
         }
 
-        // Save Guards to file //
-        guardManager.saveGuards();
+        // Save all files //
+        GuardLoader.saveGuards(new File(getGuardsFilePath()), guardManager.getGuards());
+        JailLoader.saveJail(new File(getJailFilePath()), jailManager.getJail());
 
         getLogger().info("Jailed is Disabled.");
     }
@@ -90,6 +94,7 @@ public class Jailed extends JavaPlugin {
         mainDirectory = getDataFolder().getPath() + File.separator;
         flatFileDirectory = mainDirectory + "flatfiles" + File.separator;
         guardsFile = flatFileDirectory + "guards.yml";
+        jailFile = flatFileDirectory + "jails.yml";
 
         // Create any folders that don't exist //
         File t = new File(mainDirectory);
@@ -171,7 +176,7 @@ public class Jailed extends JavaPlugin {
         return flatFileDirectory;
     }
 
-    public static String getGuardsFilePath() {
-        return guardsFile;
-    }
+    public static String getGuardsFilePath() { return guardsFile; }
+
+    public static String getJailFilePath() { return jailFile; }
 }

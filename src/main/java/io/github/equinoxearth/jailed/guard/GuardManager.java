@@ -15,22 +15,21 @@ import java.util.UUID;
 public class GuardManager {
 
     // Variable Declarations //
-    private Jailed plugin;                           // Instance of the plugin //
+    private static Jailed plugin;                           // Instance of the plugin //
     private Map<UUID, Guard> guards;
     private Location stationLocation;                       // Station for guards //
 
     // Create a new instance of GuardManager //
     public GuardManager(Jailed p) {
         plugin = p;                                         // Map the plugin instance into the GuardManager //
-        this.guards = new HashMap<UUID, Guard>();           // Create the list of guards //
-        loadGuards();
+        this.guards = GuardLoader.loadGuards(new File(plugin.getGuardsFilePath()));
     }
 
     public void addGuard(Player p) {
         guards.put(p.getUniqueId(), new Guard(p.getUniqueId()));
     }
 
-    public void loadGuards() {
+    /*public void loadGuards() {
         // Load all the guards here //
         try {
             guards = GuardLoader.loadGuards(new File(plugin.getGuardsFilePath()));
@@ -46,7 +45,7 @@ public class GuardManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * Gets the list of Guards in memory

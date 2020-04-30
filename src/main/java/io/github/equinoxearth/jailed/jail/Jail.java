@@ -12,26 +12,16 @@ import java.util.Map;
 public class Jail implements ConfigurationSerializable {
 
     // ATTRIBUTE SECTION //
-    private String jailName;
     private Location firstPos;
     private Location secondPos;
     private Location spawnPoint;
     private Location exitPoint;
 
     /**
-     * Create a jail with only a name
-     * @param n Name of the jail
+     * Create an unconfigured jail
      */
-    public Jail (String n) {
-        this.jailName = n;
-    }
+    public Jail () {
 
-    /**
-     * Get the name of this jail instance
-     * @return
-     */
-    public String getJailName() {
-        return this.jailName;
     }
 
     /**
@@ -71,7 +61,6 @@ public class Jail implements ConfigurationSerializable {
      */
 
     public Jail(Map<String, Object> map) {
-        this.jailName = (String) map.get("jailName");
         this.firstPos = (Location) map.get("firstPos");
         this.secondPos = (Location) map.get("secondPos");
         this.spawnPoint = (Location) map.get("spawnPoint");
@@ -87,7 +76,6 @@ public class Jail implements ConfigurationSerializable {
         Map<String, Object> map = new HashMap<>();
 
         // ADD ALL PROPERTIES TO THE MAP //
-        map.put("jailName", this.jailName);
         map.put("firstPos", this.firstPos);
         map.put("secondPos", this.secondPos);
         map.put("spawnPoint", this.spawnPoint);
