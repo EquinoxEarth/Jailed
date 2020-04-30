@@ -19,13 +19,13 @@ public class JailCommand extends BaseCommand {
      */
     @Subcommand("pos1")
     @CommandPermission("jail.p1")
-    public void pointOne(final Player player) {
+    public void pointOne(Player player) {
 
     }
 
     @Subcommand("pos2")
     @CommandPermission("jail.p2")
-    public void pointTwo(final Player player) {
+    public void pointTwo(Player player) {
 
     }
 

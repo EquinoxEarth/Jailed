@@ -1,11 +1,15 @@
 package io.github.equinoxearth.jailed.jail;
 
 import org.bukkit.Location;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * Represents an instance of a jail.
  */
-public class Jail {
+public class Jail implements ConfigurationSerializable {
 
     // ATTRIBUTE SECTION //
     private String jailName;
@@ -60,5 +64,35 @@ public class Jail {
      */
     public Location getExitPoint() {
         return this.exitPoint;
+    }
+
+    /*
+     * SERIALIZE & DESERIALIZE SECTION
+     */
+
+    public Jail(Map<String, Object> map) {
+        this.jailName = (String) map.get("jailName");
+        this.firstPos = (Location) map.get("firstPos");
+        this.secondPos = (Location) map.get("secondPos");
+        this.spawnPoint = (Location) map.get("spawnPoint");
+        this.exitPoint = (Location) map.get("exitPoint");
+    }
+
+    public static Jail deserialize(Map<String, Object> map) { return new Jail(map); }
+
+    public static Jail valueOf(Map<String, Object> map) { return new Jail(map); }
+
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> map = new HashMap<>();
+
+        // ADD ALL PROPERTIES TO THE MAP //
+        map.put("jailName", this.jailName);
+        map.put("firstPos", this.firstPos);
+        map.put("secondPos", this.secondPos);
+        map.put("spawnPoint", this.spawnPoint);
+        map.put("exitPoint", this.exitPoint);
+
+        return map;
     }
 }

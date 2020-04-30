@@ -1,45 +1,41 @@
-package io.github.equinoxearth.jailed.guard;
+package io.github.equinoxearth.jailed.jail;
 
-import co.aikar.commands.annotation.Dependency;
 import io.github.equinoxearth.jailed.Jailed;
-import io.github.equinoxearth.jailed.guard.Guard;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
-public class GuardLoader {
+public class JailLoader {
 
     public static Jailed plugin = Jailed.plugin;
 
-    public static Map<UUID, Guard> loadGuards(File file) {
-        FileConfiguration guardsFile = new YamlConfiguration();
-        Map<UUID, Guard> guardList = new HashMap<UUID, Guard>();
+    public static Map<String, Jail> loadJails(File file) {
+        FileConfiguration jailsFile = new YamlConfiguration();
+        Map<String, Jail> jailList = new HashMap<String, Jail>();
 
         // Check if the file exists //
         if(!file.exists()) {
-            plugin.debug("Creating Guards file...");
             try {
+                plugin.debug("Creating Jails file...");
                 file.createNewFile();
-                plugin.debug("Guards file created!");
+                plugin.debug("Jails file created, you need to create the jail!");
             } catch (IOException e) {
-                plugin.debug("Could not create Guards file!");
+                plugin.debug("Could not create Jails file!");
                 e.printStackTrace();
             }
         } else {
             // ALL LOADING DONE HERE //
             try {
-                guardsFile.load(file);
+                jailsFile.load(file);
 
                 // LOOP THROUGH ALL ENTRIES //
-                guardsFile.getKeys(false).forEach(uuid -> {
-                    guardList.put(UUID.fromString(uuid), (Guard) guardsFile.get(uuid));
+                jailsFile.getKeys(false).forEach(name -> {
+                   jailList.put(name, (Jail) jailsFile.get(name));
                 });
             } catch (IOException e) {
                 e.printStackTrace();
@@ -48,31 +44,31 @@ public class GuardLoader {
             }
         }
 
-        return guardList;
+        return jailList;
     }
 
-    public static void saveGuards(File file, Map<UUID, Guard> guards) {
-        FileConfiguration guardsFile = new YamlConfiguration();
+    public static void saveJails(File file, Map<String, Jail> jails) {
+        FileConfiguration jailsFile = new YamlConfiguration();
 
         // Check if the file exists //
         if(!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                plugin.debug("Could not create the Guards file!");
+                plugin.debug("Could not save Jails file!");
                 e.printStackTrace();
             }
         }
         // ALL SAVING DONE HERE //
-        guards.keySet().forEach(uuid -> {
-                guardsFile.set(uuid.toString(), guards.get(uuid));
+        jails.keySet().forEach(name -> {
+            jailsFile.set(name, jails.get(name));
         });
 
         // Save the file //
         try {
-            guardsFile.save(file);
+            jailsFile.save(file);
         } catch (IOException e) {
-            plugin.debug("Could not save the Guards file!");
+            plugin.debug("Could not save the Jails file!");
             e.printStackTrace();
         }
     }
