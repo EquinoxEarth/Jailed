@@ -36,10 +36,17 @@ public class Jailed extends JavaPlugin {
     public GuardManager guardManager;
     public JailManager jailManager;
 
+    /**
+     * Static block for Registration
+     */
     static {
         ConfigurationSerialization.registerClass(Guard.class, "Guard");
+        ConfigurationSerialization.registerClass(Jail.class, "Jail");
     }
 
+    /**
+     * Initial loading of the plugin
+     */
     @Override
     public void onEnable() {
         /*
