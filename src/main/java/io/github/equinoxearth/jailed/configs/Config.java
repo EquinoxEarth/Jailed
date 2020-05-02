@@ -1,4 +1,4 @@
-package io.github.equinoxearth.jailed.config;
+package io.github.equinoxearth.jailed.configs;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 

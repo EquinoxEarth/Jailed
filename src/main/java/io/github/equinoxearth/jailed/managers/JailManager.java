@@ -1,12 +1,11 @@
-package io.github.equinoxearth.jailed.jail;
+package io.github.equinoxearth.jailed.managers;
 
 import io.github.equinoxearth.jailed.Jailed;
-import org.bukkit.Location;
+import io.github.equinoxearth.jailed.configs.JailLoader;
+import io.github.equinoxearth.jailed.objects.Jail;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 

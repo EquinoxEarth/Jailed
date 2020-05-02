@@ -3,9 +3,6 @@ package io.github.equinoxearth.jailed.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import io.github.equinoxearth.jailed.Jailed;
-import io.github.equinoxearth.jailed.guard.Guard;
-import net.citizensnpcs.api.command.Command;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

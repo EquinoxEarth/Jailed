@@ -1,14 +1,12 @@
-package io.github.equinoxearth.jailed.guard;
+package io.github.equinoxearth.jailed.managers;
 
 import io.github.equinoxearth.jailed.Jailed;
+import io.github.equinoxearth.jailed.configs.GuardLoader;
+import io.github.equinoxearth.jailed.objects.Guard;
 import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 

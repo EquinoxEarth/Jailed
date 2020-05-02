@@ -1,4 +1,4 @@
-package io.github.equinoxearth.jailed.jail;
+package io.github.equinoxearth.jailed.objects;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;

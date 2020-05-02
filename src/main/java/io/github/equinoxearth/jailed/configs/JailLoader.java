@@ -1,14 +1,13 @@
-package io.github.equinoxearth.jailed.jail;
+package io.github.equinoxearth.jailed.configs;
 
 import io.github.equinoxearth.jailed.Jailed;
+import io.github.equinoxearth.jailed.objects.Jail;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class JailLoader {
 
@@ -20,8 +19,8 @@ public class JailLoader {
 
         // Check if the file exists //
         if(!file.exists()) {
+            plugin.debug("Creating Jail file...");
             try {
-                plugin.debug("Creating Jail file...");
                 file.createNewFile();
                 plugin.debug("Jail file created, you need to create the jail!");
             } catch (IOException e) {

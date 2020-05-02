@@ -1,12 +1,10 @@
-package io.github.equinoxearth.jailed.guard;
+package io.github.equinoxearth.jailed.objects;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.OfflinePlayer.*;
 
 import java.util.HashMap;
 import java.util.List;

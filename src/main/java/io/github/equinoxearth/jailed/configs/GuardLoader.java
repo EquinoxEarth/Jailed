@@ -1,12 +1,10 @@
-package io.github.equinoxearth.jailed.guard;
+package io.github.equinoxearth.jailed.configs;
 
-import co.aikar.commands.annotation.Dependency;
 import io.github.equinoxearth.jailed.Jailed;
-import io.github.equinoxearth.jailed.guard.Guard;
+import io.github.equinoxearth.jailed.objects.Guard;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;

@@ -3,23 +3,21 @@ package io.github.equinoxearth.jailed;
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.MessageKeys;
 import co.aikar.commands.MessageType;
-import com.sun.corba.se.impl.activation.CommandHandler;
 import io.github.equinoxearth.jailed.commands.GuardCommand;
 import io.github.equinoxearth.jailed.commands.JailCommand;
-import io.github.equinoxearth.jailed.guard.Guard;
-import io.github.equinoxearth.jailed.guard.GuardListener;
-import io.github.equinoxearth.jailed.guard.GuardLoader;
-import io.github.equinoxearth.jailed.guard.GuardManager;
-import io.github.equinoxearth.jailed.jail.Jail;
-import io.github.equinoxearth.jailed.jail.JailLoader;
-import io.github.equinoxearth.jailed.jail.JailManager;
+import io.github.equinoxearth.jailed.objects.Guard;
+import io.github.equinoxearth.jailed.listeners.GuardListener;
+import io.github.equinoxearth.jailed.configs.GuardLoader;
+import io.github.equinoxearth.jailed.managers.GuardManager;
+import io.github.equinoxearth.jailed.objects.Jail;
+import io.github.equinoxearth.jailed.configs.JailLoader;
+import io.github.equinoxearth.jailed.managers.JailManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 public class Jailed extends JavaPlugin {

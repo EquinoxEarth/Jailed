@@ -1,6 +1,8 @@
-package io.github.equinoxearth.jailed.guard;
+package io.github.equinoxearth.jailed.listeners;
 
 import io.github.equinoxearth.jailed.Jailed;
+import io.github.equinoxearth.jailed.managers.GuardManager;
+import io.github.equinoxearth.jailed.objects.Guard;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

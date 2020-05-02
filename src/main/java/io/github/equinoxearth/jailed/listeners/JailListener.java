@@ -1,4 +1,4 @@
-package io.github.equinoxearth.jailed.jail;
+package io.github.equinoxearth.jailed.listeners;
 
 import io.github.equinoxearth.jailed.Jailed;
 import org.bukkit.entity.Player;
