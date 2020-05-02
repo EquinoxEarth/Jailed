@@ -16,14 +16,4 @@ public class JailListener implements Listener {
         this.plugin = p;
     }
 
-    // Check if player has moved //
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    public void onPlayerMove(PlayerMoveEvent event) {
-        // Is the player jailed? //
-        Player p = event.getPlayer();
-        if (plugin.jailManager.getJailedPlayers().containsKey(p.getUniqueId())) {
-            // Player is jailed, they can't leave the jail area //
-            event.setCancelled(true);
-        }
-    }
 }
