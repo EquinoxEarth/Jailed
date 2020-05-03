@@ -2,6 +2,7 @@ package io.github.equinoxearth.jailed.listeners;
 
 import io.github.equinoxearth.jailed.Jailed;
 import io.github.equinoxearth.jailed.managers.GuardManager;
+import io.github.equinoxearth.jailed.managers.JailManager;
 import io.github.equinoxearth.jailed.objects.Guard;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,15 +12,21 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuardListener implements Listener {
 
     private Jailed plugin;
     private static GuardManager guardManager;
+    private static JailManager jailManager;
 
     public GuardListener(Jailed p) {
         this.plugin = p;
         this.guardManager = plugin.guardManager;
+        this.jailManager = plugin.jailManager;
     }
 
     /**
@@ -77,6 +84,39 @@ public class GuardListener implements Listener {
              * list of "contraband" items. It will then add up the worth of the items and pay that amount to the
              * guard that arrested the player.
              */
+
+            // Fake instance of Contraband //
+            ArrayList<ItemStack> contraband = new ArrayList<ItemStack>();
+
+            // Store both the Attacker and the Victim //
+            Player attacker = ((Player) event.getDamager());
+            Player victim = ((Player) event.getEntity());
+
+            // Check if the Damager is a Guard //
+            if (guardManager.getGuards().containsKey(attacker.getUniqueId())) {
+                // Store the guard instance //
+                Guard g = guardManager.getGuards().get(attacker.getUniqueId());
+
+                // Check victim inventory for contraband, assume no //
+                boolean criminal = false;
+                int worth = 0;
+                for (ItemStack item : victim.getInventory().getStorageContents()) {
+                    if (contraband.contains(item)) {
+                        criminal = true;
+                        // Still need to come up with a way to set & get the worth of an item //
+                        worth++; // Add the items worth to the variable //
+                    }
+                }
+
+                // Jail the player //
+                if (criminal) {
+                    if (jailManager.jailPlayer(victim)) {
+                        plugin.debug("Jailed " + victim.getName() + "!");
+                    } else {
+                        attacker.sendMessage("Unable to jail " + victim.getName() + "! Consult an admin.");
+                    }
+                }
+            }
         }
     }
 

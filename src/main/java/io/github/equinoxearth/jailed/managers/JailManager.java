@@ -24,4 +24,14 @@ public class JailManager {
     public Jail getJail() { return this.jail; }
 
     public Map<UUID, Player> getJailedPlayers() { return this.jailedPlayers; }
+
+    public boolean jailPlayer(Player p) {
+        if(jail.getSpawnPoint() == null) {
+            plugin.debug("Could not jail " + p.getName() + ", no jail is set!");
+            return false;
+        } else {
+            p.teleport(jail.getSpawnPoint());
+            return true;
+        }
+    }
 }
