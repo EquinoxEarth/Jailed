@@ -48,12 +48,20 @@ public class Jail implements ConfigurationSerializable {
         return this.spawnPoint;
     }
 
+    public void setSpawnPoint(Location spawnPoint) {
+        this.spawnPoint = spawnPoint;
+    }
+
     /**
      * Get the exit point coordinate
      * @return
      */
     public Location getExitPoint() {
         return this.exitPoint;
+    }
+
+    public void setExitPoint(Location exitPoint) {
+        this.exitPoint = exitPoint;
     }
 
     /*

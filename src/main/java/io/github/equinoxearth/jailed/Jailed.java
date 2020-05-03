@@ -13,10 +13,13 @@ import io.github.equinoxearth.jailed.objects.Jail;
 import io.github.equinoxearth.jailed.configs.JailLoader;
 import io.github.equinoxearth.jailed.managers.JailManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
@@ -33,6 +36,8 @@ public class Jailed extends JavaPlugin {
 
     public GuardManager guardManager;
     public JailManager jailManager;
+
+    public ArrayList<ItemStack> contraband;
 
     /**
      * Static block for Registration
@@ -62,6 +67,18 @@ public class Jailed extends JavaPlugin {
 
         // Register plugin listeners //
         getServer().getPluginManager().registerEvents(new GuardListener(this), this);
+
+        // Send initial setup messages //
+        if(jailManager.getJail().getSpawnPoint() == null || jailManager.getJail().getExitPoint() == null) {
+            plugin.debug("The jail hasn't been set up yet! Use /jail setspawn and /jail setexit");
+        }
+
+        ArrayList<ItemStack> contraband = new ArrayList<ItemStack>(); // Fake contraband variable
+        if(contraband.isEmpty()) {
+            plugin.debug("The contraband list is empty, might want to add some items to it using " +
+                    "/jail items");
+            contraband.add(new ItemStack(Material.AIR));
+        }
 
         // This needs to come last, after we've successfully gotten through everything //
         getLogger().info("Jailed is Enabled.");
